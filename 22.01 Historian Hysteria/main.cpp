@@ -9,7 +9,7 @@ using namespace std;
 int countLines(fstream &);
 
 int main() {
-  int intArrayLength, intTotalDistance = 0;
+  int intArrayLength, intTotalDistance = 0, intSimilarity = 0, intRepeats = 0;
   string strFilePath = "./lists.txt", strCurLine;
   fstream List(strFilePath);
   if (!List.is_open()) {
@@ -31,11 +31,25 @@ int main() {
   sort(arrListOne, arrListOne + intArrayLength);
   sort(arrListTwo, arrListTwo + intArrayLength);
 
+  // Part 1 -- total distance between two parts
   for (int i = 0; i < intArrayLength; i++) {
-    cout << arrListOne[i] << "  " << arrListTwo[i] << endl;
+    // cout << arrListOne[i] << "  " << arrListTwo[i] << endl;
     intTotalDistance += abs(arrListOne[i] - arrListTwo[i]);
   }
-  cout << "Total Distance: " << intTotalDistance;
+  cout << "Total Distance: " << intTotalDistance << endl;
+
+  // Part 2 -- Similarity score
+
+  for (int i = 0; i < intArrayLength; i++) {
+    for (int j = 0; j < intArrayLength; j++) {
+      if (arrListOne[i] == arrListTwo[j])
+        intRepeats++;
+    }
+
+    intSimilarity += arrListOne[i] * intRepeats;
+    intRepeats = 0;
+  }
+  cout << "Similarity score: " << intSimilarity << endl;
 
   return 0;
 }
